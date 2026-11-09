@@ -15,7 +15,7 @@ Cette séparation des responsabilités permet de distinguer les services de prod
 | Élément | VPS | Knox | Canary |
 |---|---|---|---|
 | Adresse IP | `172.105.99.9` | `10.1.106.34` | `10.1.106.32` |
-| Nom d'hôte | À vérifier | `raphael-knox` | `raphael-canary` |
+| Nom d'hôte | | `raphael-knox` | `raphael-canary` |
 | Hébergement | VPS distant | Proxmox | Proxmox |
 | Système | Ubuntu, version à confirmer | Ubuntu Server 22.04 LTS | Ubuntu Server 22.04 LTS |
 | Fonction principale | Serveur Web sécurisé | Sauvegardes et intégrité | Pot de miel |
