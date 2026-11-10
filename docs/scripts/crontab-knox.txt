@@ -1,0 +1,40 @@
+
+# ============================================================
+# PROJET SÉCURITÉ TP1 — AUTOMATISATION DES TÂCHES KNOX
+# ============================================================
+#
+# Fichier       : crontab-knox.txt
+# Machine       : raphael-knox (VM 110)
+# Système       : Ubuntu Server 22.04.5 LTS
+# Utilisateur   : raphael
+#
+# OBJECTIF
+# --------
+# Automatiser deux opérations de sécurité :
+#
+# 1. La sauvegarde quotidienne des données du VPS.
+# 2. La surveillance horaire de l'intégrité des fichiers.
+#
+# PLANIFICATION
+# -------------
+# Sauvegarde    : tous les jours à 02 h 00.
+# Surveillance  : toutes les heures, à la minute 00.
+#
+# Les heures correspondent au fuseau horaire configuré
+# sur la machine Knox.
+#
+# JOURNAUX
+# --------
+# sauvegarde-vps.log   : sortie du script de sauvegarde.
+# surveillance-cron.log : sortie du script de surveillance.
+#
+# La notation ">>" ajoute les résultats au journal existant.
+# La notation "2>&1" redirige aussi les erreurs vers ce journal.
+#
+# ============================================================
+
+#Sauvegarde quotidienne du VPS à 2h du matin
+0 2 * * * /bin/bash /home/raphael/scripts/sauvegarde-vps.sh >> /home/raphael/sauvegarde-vps.log 2>&1
+
+#Surveillance SHA-256 toutes les heures
+0 * * * * /bin/bash /home/raphael/scripts/surveillance-integrite.sh >> /home/raphael/surveillance-cron.log 2>&1
