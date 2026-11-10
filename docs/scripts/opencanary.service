@@ -1,0 +1,41 @@
+
+# ============================================================
+# PROJET SÉCURITÉ TP1 — SERVICE SYSTEMD OPENCANARY
+# ============================================================
+#
+# Fichier       : opencanary.service
+# Machine       : raphael-canary (VM Proxmox 103)
+# Système       : Ubuntu Server 22.04 LTS
+# Installation  : /etc/systemd/system/opencanary.service
+#
+# OBJECTIF
+# --------
+# Gérer le démarrage, l'arrêt et le redémarrage automatique
+# du serveur leurre OpenCanary.
+#
+# FONCTIONNEMENT
+# --------------
+# - Attend la disponibilité du réseau.
+# - Lance OpenCanary depuis son environnement Python.
+# - Redémarre le service en cas d'échec.
+# - Permet son activation au démarrage du système.
+#
+# ============================================================
+
+[Unit]
+Description=OpenCanary honeypot
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=forking
+User=root
+Group=root
+WorkingDirectory=/home/raphael/opencanary
+ExecStart=/home/raphael/opencanary/venv/bin/opencanaryd --start
+ExecStop=/home/raphael/opencanary/venv/bin/opencanaryd --stop
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
