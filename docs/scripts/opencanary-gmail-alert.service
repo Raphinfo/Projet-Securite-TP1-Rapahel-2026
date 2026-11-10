@@ -1,0 +1,48 @@
+
+# ============================================================
+# PROJET SÉCURITÉ TP1 — SERVICE SYSTEMD D'ALERTES GMAIL
+# ============================================================
+#
+# Fichier      : opencanary-gmail-alert.service
+# Machine      : raphael-canary (VM Proxmox 103)
+# Système      : Ubuntu Server 22.04 LTS
+# Installation : /etc/systemd/system/opencanary-gmail-alert.service
+#
+# OBJECTIF
+# --------
+# Exécuter automatiquement le script Python chargé
+# de surveiller les événements OpenCanary et d'envoyer
+# des notifications Gmail lors des détections retenues.
+#
+# FONCTIONNEMENT
+# --------------
+# 1. Attend la disponibilité du réseau.
+# 2. Démarre après le service OpenCanary.
+# 3. Lance le script Python de notification.
+# 4. Redémarre le processus en cas d'échec.
+# 5. Applique des restrictions de sécurité.
+#
+# SCRIPT ASSOCIÉ
+# --------------
+# /usr/local/bin/opencanary-gmail-alert.py
+#
+# ============================================================
+
+[Unit]
+Description=OpenCanary - Alertes Gmail
+After=network-online.target opencanary.service
+Wants=network-online.target
+Requires=opencanary.service
+
+[Service]
+Type=simple
+User=root
+Group=root
+ExecStart=/usr/bin/python3 /usr/local/bin/opencanary-gmail-alert.py
+Restart=on-failure
+RestartSec=10
+NoNewPrivileges=true
+UMask=0077
+
+[Install]
+WantedBy=multi-user.target
