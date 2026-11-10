@@ -295,4 +295,3 @@ Knox est donc prête à assurer ses fonctions de sauvegarde et de surveillance d
 
 ---
 
-**Document suivant :** `docs/08-knox-sauvegardes.md`
